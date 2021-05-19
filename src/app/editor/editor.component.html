@@ -1,54 +1,8 @@
-<style>
-    div.editor { max-height: 70vh; }
-
-div.label-box {
-    border-top-left-radius: .5rem!important;
-    border-top-right-radius: .5rem!important;
-}
-
-.form-control { border-radius: 0 !important; }
-
-.form-control:disabled { background-color: #ffffff !important; }
-
-.output {
-    border-bottom-left-radius: .5rem!important;
-    border-bottom-right-radius: .5rem!important;
-}
-
-.btn-dark {
-    color: #ffffff;
-    background-color: #723610;
-}
-
-.btn-primary {
-    color: #ffffff;
-    background-color: #091827;
-}
-
-.btn-beautify {
-    color: #ffffff;
-    background-color: #112230;
-}
-
-select.languages-select {
-    cursor: pointer;
-}
-
-select.languages-select > option {
-    display: block;
-    background: ghostwhite;
-}
-
-select.languages-select:focus > option:checked { 
-    font-weight: bold;
-}
-</style>
-
 <div>
     <!-- header -->
     <nav class="navbar navbar-light bg-light ">
         <div class="container text-center p-2 ">
-            <span class="mx-auto text-bold">My Own IDE</span>
+            <span class="mx-auto text-bold">Hi. You can choose a language now.</span>
         </div>
     </nav>
 </div>
@@ -58,9 +12,9 @@ select.languages-select:focus > option:checked {
 <div class="container h-100 mt-4">
     
     <!-- languages & theme -->
-    <div class="row mb-4 justify-content-center mx-4">
+    <div class="row mb-3 justify-content-center mx-3">
         <!-- languages select -->
-        <div class="col-auto col-lg-3 col-md-4 col-sm-6">
+        <div class="col-auto col-lg-2 col-md-3 col-sm-3">
             <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="languages-select">Languages</label>
@@ -73,7 +27,7 @@ select.languages-select:focus > option:checked {
             </div>
         </div>
         <!-- theme radio buttons -->
-        <div class="col-auto col-lg-3 col-md-4 col-sm-6">
+        <div class="col-auto col-lg-2 col-md-3 col-sm-3">
             <div class="btn-group btn-group-toggle btn-group-sm mx-auto" data-toggle="buttons">
                 <label class="btn btn-secondary active">
                     <input type="radio" name="options" id="option1" autocomplete="off" checked>
@@ -92,7 +46,7 @@ select.languages-select:focus > option:checked {
     </div>
     
     <!-- the code editor -->
-    <div class="row mb-4">
+    <div class="row mb-3">
         <div class="col">
             <div class="editor" #editor></div>
         </div>
@@ -102,18 +56,18 @@ select.languages-select:focus > option:checked {
     <div class="col-md-12 text-center">
     <div class="btn-group">
         <div class="">
-            <button type="button" class="btn btn-dark btn-sm btn-block px-4 mx-2">
+            <button type="button" class="btn btn-dark btn-sm btn-block px-3 mx-3">
                 Run
             </button>
         </div>
         <div class="">
-            <button type="button" class="btn btn-primary btn-sm btn-block px-4 mx-2">
+            <button type="button" class="btn btn-primary btn-sm btn-block px-3 mx-3">
                 <!--(click)="consoleCode()"-->
                 Clear
             </button>
         </div>
         <div class="">
-            <button type="button" class="btn btn-beautify btn-sm btn-block px-4 mx-2" (click)="Beautify()">
+            <button type="button" class="btn btn-beautify btn-sm btn-block px-3 mx-3" (click)="Beautify()">
                 Beautify
             </button>
         </div>
@@ -121,7 +75,7 @@ select.languages-select:focus > option:checked {
     </div>
 
     <!-- output box -->
-    <div class="row mt-4">
+    <div class="row mt-3">
         <div class="col">
             <div class="label-box border"><span class="mx-4 font-weight-light">Output</span></div>
             <textarea class="form-control output" rows="6" disabled="true" aria-label="output-textarea"></textarea>

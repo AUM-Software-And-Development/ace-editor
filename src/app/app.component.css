@@ -1,0 +1,43 @@
+div.editor { max-height: 72vh; }
+
+div.label-box {
+    border-top-left-radius: .54rem!important;
+    border-top-right-radius: .54rem!important;
+}
+
+.form-control { border-radius: 0 !important; }
+
+.form-control:disabled { background-color: #ffffff !important; }
+
+.output {
+    border-bottom-left-radius: .54rem!important;
+    border-bottom-right-radius: .54rem!important;
+}
+
+.btn-dark {
+    color: #ffffff;
+    background-color: #367210;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #091827;
+}
+
+.btn-beautify {
+    color: #ffffff;
+    background-color: #112230;
+}
+
+select.languages-select {
+    cursor: pointer;
+}
+
+select.languages-select > option {
+    display: block;
+    background: ghostwhite;
+}
+
+select.languages-select:focus > option:checked { 
+    font-weight: bold;
+}

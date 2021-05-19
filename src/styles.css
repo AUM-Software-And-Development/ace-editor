@@ -1,1 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+div.editor { max-height: 72vh !important; }
+
+div.label-box {
+    border-top-left-radius: .54rem !important;
+    border-top-right-radius: .54rem !important;
+}
+
+.form-control { border-radius: 0 !important; }
+
+.form-control:disabled { background-color: #ffffff !important; }
+
+.output {
+    border-bottom-left-radius: .54rem !important;
+    border-bottom-right-radius: .54rem !important;
+}
+
+.btn-dark {
+    color: #ffffff !important;;
+    background-color: #367210 !important;;
+}
+
+.btn-primary {
+    color: #ffffff !important;;
+    background-color: #091827 !important;;
+}
+
+.btn-beautify {
+    color: #ffffff !important;
+    background-color: #112230 !important;
+}
+
+select.languages-select {
+    cursor: pointer !important;
+}
+
+select.languages-select > option {
+    display: block !important;
+    background: ghostwhite !important;
+}
+
+select.languages-select:focus > option:checked { 
+    font-weight: bold !important;
+}

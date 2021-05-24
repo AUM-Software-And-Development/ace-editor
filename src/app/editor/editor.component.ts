@@ -1,13 +1,15 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+
 import * as ace from 'ace-builds';
-// Allows enumeration through different modes.
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/ext-beautify';
 
+const SYNTAX = 'ace/mode/javascript';
 const THEME = 'ace/theme/github';
-const MODE = 'ace/mode/javascript';
+const DEFAULT_CONTENT = '';
+var EVENT_RESULT = '';
 
 @Component({
   selector: 'app-editor',
@@ -17,59 +19,96 @@ const MODE = 'ace/mode/javascript';
 export class EditorComponent implements OnInit {
 
   private editor!: ace.Ace.Editor;
-  // Assertion justification: Assigned on init.
   private aceDelegate: any;
   @ViewChild('editor', {static: true}) editorElementRef!: ElementRef;
-  // Assertion justification: Assigned on init.
+  @Input() content!: string;
 
-  constructor() {} // Constructor not in use. Construction occurs on init.
-
-    private constructOptions = (): Partial<ace.Ace.EditorOptions> & { enableBasicAutocompletion?: boolean; } => 
-    {
-      const aceEditorOptions: Partial<ace.Ace.EditorOptions> = {
-      // The autocomplete property is not documented in the Ace namespace, so it must be delegated/inferred.
-      highlightActiveLine: true,
-      minLines: 10,
-      maxLines: Infinity
+  private constructOptions(): Partial<ace.Ace.EditorOptions> & { enableBasicAutocompletion?: boolean; }
+  {
+    // The autocomplete property is not documented in the Ace namespace, so it must be delegated/inferred.
+    var aceEditorOptions: Partial<ace.Ace.EditorOptions> = {
+    highlightActiveLine: true,
+    minLines: 10,
+    maxLines: Infinity
     }; // =>
-    const delegateOption = {
+    var delegateOption = {
       enableBasicAutocompletion: true
-    }; //_
-    const assignDelegate = Object.assign(aceEditorOptions, delegateOption);
+    };
+    var assignDelegate = Object.assign(aceEditorOptions, delegateOption);
     return assignDelegate;
+  }
+
+  private constructEditor(options: any, element: Element): ace.Ace.Editor 
+  {
+    var editor = ace.edit(element, options);
+    editor.getSession().setMode(SYNTAX);
+    editor.setTheme(THEME);
+    editor.setShowFoldWidgets(true);
+    return editor;
   }
 
   public ngOnInit(): void
   {
     ace.require('ace/ext/language_tools');
-    const Element = this.editorElementRef.nativeElement;
-    const Options = this.constructOptions();
-    // Initializes the editing component to use the syntax helper.
-    this.editor = ace.edit(Element, Options);
-    this.editor.setTheme(THEME);
-    this.editor.getSession().setMode(MODE);
-    this.editor.setShowFoldWidgets(true);
+    var Options = this.constructOptions();
+    var Element = this.editorElementRef.nativeElement;
+    this.editor = this.constructEditor(Options, Element);
+    this.ChangeContent(this.content || DEFAULT_CONTENT);
   }
 
-  public Beautify = () =>
+  private editorStatus = () => EVENT_RESULT = this.editor? "did return a reference" : "did not return a reference";
+  
+  public Beautify()
   {
-    this.aceDelegate = ace.require('ace/ext/beautify');
     // Won't set unless user requests it.
-    if (this.editor && this.aceDelegate)
-    // Check that the handlers are valid...
+    // Invokes the ace beautify component on the delegate's required case rather than the default case.
+    // Uses the current session (active_element / template id).
+    // Restrict use to while needed...
+    if (this.editorStatus())
     {
-      const session = this.editor.getSession();
+      this.aceDelegate = ace.require('ace/ext/beautify');
+      var session = this.editor.getSession();
       this.aceDelegate.beautify(session);
-      // Invokes the ace beautify component on the delegates required case rather than the default case.
-      // Uses the current session (active_element / template id).
       this.aceDelegate = null;
-      // Restrict use to while needed...
+    }
+    console.log("Beautify ran, and the editor: " + EVENT_RESULT);
+    this.consoleLogInstructions("These are the instructions that were beautified:");
+  }
+
+  public ChangeContent(contentSet: string)
+  {
+    if (this.editorStatus())
+    {
+      this.editor.setValue(contentSet);
     }
   }
 
-  private consoleLogInstructions = () =>
+  private onChangeContent(callback: (function_: string, delta: ace.Ace.Delta) => void): void
   {
-    const instructions = this.editor.getValue();
+    this.editor.on('change', (delta) =>
+    {
+      var update = this.consoleLogInstructions();
+      callback(update, delta);
+    });
+  }
+
+  private checkContent()
+  {
+    if (this.editorStatus())
+    {
+      var dataArray = this.consoleLogInstructions();
+      return dataArray;
+    }
+    return null;
+  }
+
+  private consoleLogInstructions(logString = "These are the instructions that were found:"): string
+  {
+    console.log(logString);
+    console.log("**********");
+    var instructions = this.editor.getValue();
     console.log(instructions);
+    console.log("**********");
+    return instructions;
   }
 }

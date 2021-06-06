@@ -21,6 +21,10 @@ class ExpressApp
 
 const app = new ExpressApp().app;
 
+import { appRoutes } from "./routes/app.routes"
+
+app.use(appRoutes); /* Align routes */
+
 app.listen(
     process.env.PORT || PORT, () => 
     {

@@ -1,4 +1,6 @@
 import {Router} from "express";
+import {userRoutes} from "./user/user.routes";
+import {itemsRoutes} from "./items/items.routes";
 
 class AppRoutes
 {
@@ -8,16 +10,17 @@ class AppRoutes
     constructor()
     {
         this.routes = Router();
-        this.constructRouteSettings();
+        this.constructAppRoutesConfig();
     }
 
-    private constructRouteSettings()
+    
+    private constructAppRoutesConfig()
     {
         this.routes.get(
-            '/', (req, res) =>
+            "/", (req, res) =>
             {
-                console.log("GET: \'New user accessing on port\'");
-                res.send("Routes built ...ok");
+                this.routes.use("/user", userRoutes);
+                this.routes.use("/items", itemsRoutes);
             }
         )
     }

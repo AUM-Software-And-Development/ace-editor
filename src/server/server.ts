@@ -1,3 +1,4 @@
+import "./config/config.ts";
 import * as _express_ from "express";
 import * as _bodyparser_ from "body-parser";
 
